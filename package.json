@@ -1,5 +1,5 @@
 {
-  "name": "react-native-boring-avatars",
+  "name": "@cmgriffing/react-native-boring-avatars",
   "version": "1.0.1",
   "description": "React Native implementation of boring avatars",
   "main": "lib/module/index.js",

@@ -8,7 +8,7 @@ import {
 } from '../utilities';
 import Svg, { Mask, Rect, G, Path } from 'react-native-svg';
 
-const SIZE = 36;
+const SIZE = 80;
 
 function generateData(name, colors) {
   const numFromName = getNumber(name);
