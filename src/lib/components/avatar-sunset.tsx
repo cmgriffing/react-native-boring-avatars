@@ -9,11 +9,19 @@ import Svg, {
   LinearGradient,
   Stop,
 } from 'react-native-svg';
+import type { AvatarProps } from '../types';
+import type { PropsWithoutRef } from 'react';
+
+const SvgAsAny = Svg as any;
+const MaskAsAny = Mask as any;
+const RectAsAny = Rect as any;
+const StopAsAny = Stop as any;
+const PathAsAny = Path as any;
 
 const ELEMENTS = 4;
 const SIZE = 80;
 
-function generateColors(name, colors) {
+function generateColors(name: string, colors: string[]) {
   const numFromName = getNumber(name);
   const range = colors && colors.length;
 
@@ -24,19 +32,19 @@ function generateColors(name, colors) {
   return elementsProperties;
 }
 
-const AvatarSunset = (props) => {
+const AvatarSunset = (props: PropsWithoutRef<AvatarProps>) => {
   const properties = generateColors(props.name, props.colors);
   const name = props.name.replace(/\s/g, '');
 
   return (
-    <Svg
+    <SvgAsAny
       viewBox={'0 0 ' + SIZE + ' ' + SIZE}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
     >
-      <Mask
+      <MaskAsAny
         id="mask__sunset"
         maskUnits="userSpaceOnUse"
         x={0}
@@ -44,19 +52,19 @@ const AvatarSunset = (props) => {
         width={SIZE}
         height={SIZE}
       >
-        <Rect
+        <RectAsAny
           width={SIZE}
           height={SIZE}
           rx={props.square ? undefined : SIZE * 2}
           fill="white"
         />
-      </Mask>
+      </MaskAsAny>
       <G mask="url(#mask__sunset)">
-        <Path
+        <PathAsAny
           fill={'url(#gradient_paint0_linear_' + name + ')'}
           d="M0 0h80v40H0z"
         />
-        <Path
+        <PathAsAny
           fill={'url(#gradient_paint1_linear_' + name + ')'}
           d="M0 40h80v40H0z"
         />
@@ -70,8 +78,8 @@ const AvatarSunset = (props) => {
           y2={SIZE / 2}
           gradientUnits="userSpaceOnUse"
         >
-          <Stop stopColor={properties[0].color} />
-          <Stop offset={1} stopColor={properties[1].color} />
+          <StopAsAny stopColor={properties[0].color} />
+          <StopAsAny offset={1} stopColor={properties[1].color} />
         </LinearGradient>
         <LinearGradient
           id={'gradient_paint1_linear_' + name}
@@ -81,11 +89,11 @@ const AvatarSunset = (props) => {
           y2={SIZE}
           gradientUnits="userSpaceOnUse"
         >
-          <Stop stopColor={properties[2].color} />
-          <Stop offset={1} stopColor={properties[3].color} />
+          <StopAsAny stopColor={properties[2].color} />
+          <StopAsAny offset={1} stopColor={properties[3].color} />
         </LinearGradient>
       </Defs>
-    </Svg>
+    </SvgAsAny>
   );
 };
 

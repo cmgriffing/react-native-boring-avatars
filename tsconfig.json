@@ -1,5 +1,8 @@
 {
+  "exclude": ["./example", "./lib"],
   "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
     "baseUrl": "./",
     "paths": {
       "react-native-boring-avatars": ["./src/index"]
@@ -22,6 +25,13 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "outDir": "./lib/module"
+  },
+
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
   }
 }

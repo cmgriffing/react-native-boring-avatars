@@ -1,11 +1,19 @@
 import * as React from 'react';
 import { getNumber, getUnit, getRandomColor, getBoolean } from '../utilities';
 import Svg, { Mask, Rect, G, Circle, Line } from 'react-native-svg';
+import type { PropsWithoutRef } from 'react';
+import type { AvatarProps } from '../types';
 
 const ELEMENTS = 4;
 const SIZE = 80;
 
-function generateColors(name, colors) {
+const SvgAsAny = Svg as any;
+const MaskAsAny = Mask as any;
+const RectAsAny = Rect as any;
+const LineAsAny = Line as any;
+const CircleAsAny = Circle as any;
+
+function generateColors(name: string, colors: string[]) {
   const numFromName = getNumber(name);
   const range = colors && colors.length;
 
@@ -20,18 +28,18 @@ function generateColors(name, colors) {
   return elementsProperties;
 }
 
-const AvatarBauhaus = (props) => {
+const AvatarBauhaus = (props: PropsWithoutRef<AvatarProps>) => {
   const properties = generateColors(props.name, props.colors);
 
   return (
-    <Svg
+    <SvgAsAny
       viewBox={'0 0 ' + SIZE + ' ' + SIZE}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
     >
-      <Mask
+      <MaskAsAny
         id="mask__bauhaus"
         maskUnits="userSpaceOnUse"
         x={0}
@@ -39,16 +47,16 @@ const AvatarBauhaus = (props) => {
         width={SIZE}
         height={SIZE}
       >
-        <Rect
+        <RectAsAny
           width={SIZE}
           height={SIZE}
           rx={props.square ? undefined : SIZE * 2}
           fill="white"
         />
-      </Mask>
+      </MaskAsAny>
       <G mask="url(#mask__bauhaus)">
-        <Rect width={SIZE} height={SIZE} fill={properties[0].color} />
-        <Rect
+        <RectAsAny width={SIZE} height={SIZE} fill={properties[0].color} />
+        <RectAsAny
           x={(SIZE - 60) / 2}
           y={(SIZE - 20) / 2}
           width={SIZE}
@@ -68,7 +76,7 @@ const AvatarBauhaus = (props) => {
             ')'
           }
         />
-        <Circle
+        <CircleAsAny
           cx={SIZE / 2}
           cy={SIZE / 2}
           fill={properties[2].color}
@@ -81,7 +89,7 @@ const AvatarBauhaus = (props) => {
             ')'
           }
         />
-        <Line
+        <LineAsAny
           x1={0}
           y1={SIZE / 2}
           x2={SIZE}
@@ -103,7 +111,7 @@ const AvatarBauhaus = (props) => {
           }
         />
       </G>
-    </Svg>
+    </SvgAsAny>
   );
 };
 

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { PropsWithoutRef } from 'react';
 import { getNumber, getRandomColor } from '../utilities';
 import Svg, { Mask, Rect, G, Path, Circle } from 'react-native-svg';
+import type { AvatarProps } from '../types';
+
+const SvgAsAny = Svg as any;
+const MaskAsAny = Mask as any;
+const RectAsAny = Rect as any;
+const CircleAsAny = Circle as any;
+const PathAsAny = Path as any;
 
 const SIZE = 90;
 const COLORS = 5;
 
-function generateColors(colors, name) {
+function generateColors(name: string, colors: string[]) {
   const numFromName = getNumber(name);
   const range = colors && colors.length;
   const colorsShuffle = Array.from({ length: COLORS }, (_, i) =>
@@ -25,18 +32,18 @@ function generateColors(colors, name) {
   return iconColors;
 }
 
-const AvatarRing = (props) => {
-  const cellColors = generateColors(props.colors, props.name);
+const AvatarRing = (props: PropsWithoutRef<AvatarProps>) => {
+  const cellColors = generateColors(props.name, props.colors);
 
   return (
-    <Svg
+    <SvgAsAny
       viewBox={'0 0 ' + SIZE + ' ' + SIZE}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       width={props.size}
       height={props.size}
     >
-      <Mask
+      <MaskAsAny
         id="mask__ring"
         maskUnits="userSpaceOnUse"
         x={0}
@@ -44,25 +51,25 @@ const AvatarRing = (props) => {
         width={SIZE}
         height={SIZE}
       >
-        <Rect
+        <RectAsAny
           width={SIZE}
           height={SIZE}
           rx={props.square ? undefined : SIZE * 2}
           fill="white"
         />
-      </Mask>
+      </MaskAsAny>
       <G mask="url(#mask__ring)">
-        <Path d="M0 0h90v45H0z" fill={cellColors[0]} />
-        <Path d="M0 45h90v45H0z" fill={cellColors[1]} />
-        <Path d="M83 45a38 38 0 00-76 0h76z" fill={cellColors[2]} />
-        <Path d="M83 45a38 38 0 01-76 0h76z" fill={cellColors[3]} />
-        <Path d="M77 45a32 32 0 10-64 0h64z" fill={cellColors[4]} />
-        <Path d="M77 45a32 32 0 11-64 0h64z" fill={cellColors[5]} />
-        <Path d="M71 45a26 26 0 00-52 0h52z" fill={cellColors[6]} />
-        <Path d="M71 45a26 26 0 01-52 0h52z" fill={cellColors[7]} />
-        <Circle cx={45} cy={45} r={23} fill={cellColors[8]} />
+        <PathAsAny d="M0 0h90v45H0z" fill={cellColors[0]} />
+        <PathAsAny d="M0 45h90v45H0z" fill={cellColors[1]} />
+        <PathAsAny d="M83 45a38 38 0 00-76 0h76z" fill={cellColors[2]} />
+        <PathAsAny d="M83 45a38 38 0 01-76 0h76z" fill={cellColors[3]} />
+        <PathAsAny d="M77 45a32 32 0 10-64 0h64z" fill={cellColors[4]} />
+        <PathAsAny d="M77 45a32 32 0 11-64 0h64z" fill={cellColors[5]} />
+        <PathAsAny d="M71 45a26 26 0 00-52 0h52z" fill={cellColors[6]} />
+        <PathAsAny d="M71 45a26 26 0 01-52 0h52z" fill={cellColors[7]} />
+        <CircleAsAny cx={45} cy={45} r={23} fill={cellColors[8]} />
       </G>
-    </Svg>
+    </SvgAsAny>
   );
 };
 
