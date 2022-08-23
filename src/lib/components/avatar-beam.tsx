@@ -15,18 +15,13 @@ const MaskAsAny = Mask as any;
 const RectAsAny = Rect as any;
 const PathAsAny = Path as any;
 
-const SIZE = 15;
-
 const AvatarBeam = (props: PropsWithoutRef<AvatarProps>) => {
-  const scaleFactor = props.scaleFactor || 3;
-  const SCALED_SIZE = SIZE * scaleFactor;
-
-  const { name, colors } = props;
+  const { name, colors, size } = props;
 
   const numFromName = getNumber(name);
   const range = colors && colors.length;
 
-  const scaleNumber = createScaleNumber(36, SCALED_SIZE);
+  const scaleNumber = createScaleNumber(36, size);
 
   const wrapperColor = getRandomColor(numFromName, colors, range);
 
@@ -45,9 +40,7 @@ const AvatarBeam = (props: PropsWithoutRef<AvatarProps>) => {
   const EYE_RADIUS_X = scaleNumber(1);
 
   const headBorderRadiusScaler = +scaleNumber(6);
-  const HEAD_BORDER_RADIUS = isCircle
-    ? SCALED_SIZE
-    : SCALED_SIZE / headBorderRadiusScaler;
+  const HEAD_BORDER_RADIUS = isCircle ? size : size / headBorderRadiusScaler;
 
   const preTranslateRange = +scaleNumber(10);
   const translateThreshold = +scaleNumber(5);
@@ -56,21 +49,19 @@ const AvatarBeam = (props: PropsWithoutRef<AvatarProps>) => {
   const preTranslateX = getUnit(numFromName, preTranslateRange, 1);
   const wrapperTranslateX =
     preTranslateX < translateThreshold
-      ? preTranslateX + SCALED_SIZE / translateScaler
+      ? preTranslateX + size / translateScaler
       : preTranslateX;
   const preTranslateY = getUnit(numFromName, preTranslateRange, 2);
   const wrapperTranslateY =
     preTranslateY < translateThreshold
-      ? preTranslateY + SCALED_SIZE / translateScaler
+      ? preTranslateY + size / translateScaler
       : preTranslateY;
 
   const wrapperScaleScaler = +scaleNumber(12);
   const wrapperScaleDivider = +scaleNumber(10);
 
   const wrapperScale =
-    1 +
-    getUnit(numFromName, SCALED_SIZE / wrapperScaleScaler) /
-      wrapperScaleDivider;
+    1 + getUnit(numFromName, size / wrapperScaleScaler) / wrapperScaleDivider;
 
   const eyeSpreadRange = +scaleNumber(5);
   const eyeSpread = getUnit(numFromName, eyeSpreadRange);
@@ -82,13 +73,13 @@ const AvatarBeam = (props: PropsWithoutRef<AvatarProps>) => {
 
   const faceTranslateXRange = +scaleNumber(8);
   const faceTranslateX =
-    wrapperTranslateX > SCALED_SIZE / faceTranslateScaler
+    wrapperTranslateX > size / faceTranslateScaler
       ? wrapperTranslateX / 2
       : getUnit(numFromName, faceTranslateXRange, 1);
 
   const faceTranslateYRange = 7;
   const faceTranslateY =
-    wrapperTranslateY > SCALED_SIZE / faceTranslateScaler
+    wrapperTranslateY > size / faceTranslateScaler
       ? wrapperTranslateY / 2
       : getUnit(numFromName, faceTranslateYRange, 2);
 
@@ -104,37 +95,33 @@ const AvatarBeam = (props: PropsWithoutRef<AvatarProps>) => {
 
   return (
     <SvgAsAny
-      viewBox={'0 0 ' + SCALED_SIZE + ' ' + SCALED_SIZE}
+      viewBox={'0 0 ' + size + ' ' + size}
       fill="none"
-      width={props.size}
-      height={props.size}
+      width={size}
+      height={size}
     >
       <MaskAsAny
         id="mask__beam"
         maskUnits="userSpaceOnUse"
         x={0}
         y={0}
-        width={SCALED_SIZE}
-        height={SCALED_SIZE}
+        width={size}
+        height={size}
       >
         <RectAsAny
-          width={SCALED_SIZE}
-          height={SCALED_SIZE}
-          rx={props.square ? undefined : SCALED_SIZE * 2}
+          width={size}
+          height={size}
+          rx={props.square ? undefined : size * 2}
           fill="white"
         />
       </MaskAsAny>
       <G mask="url(#mask__beam)">
-        <RectAsAny
-          width={SCALED_SIZE}
-          height={SCALED_SIZE}
-          fill={backgroundColor}
-        />
+        <RectAsAny width={size} height={size} fill={backgroundColor} />
         <RectAsAny
           x="0"
           y="0"
-          width={SCALED_SIZE}
-          height={SCALED_SIZE}
+          width={size}
+          height={size}
           transform={
             'translate(' +
             wrapperTranslateX +
@@ -143,9 +130,9 @@ const AvatarBeam = (props: PropsWithoutRef<AvatarProps>) => {
             ') rotate(' +
             wrapperRotate +
             ' ' +
-            SCALED_SIZE / 2 +
+            size / 2 +
             ' ' +
-            SCALED_SIZE / 2 +
+            size / 2 +
             ') scale(' +
             wrapperScale +
             ')'
@@ -162,9 +149,9 @@ const AvatarBeam = (props: PropsWithoutRef<AvatarProps>) => {
             ') rotate(' +
             faceRotate +
             ' ' +
-            SCALED_SIZE / 2 +
+            size / 2 +
             ' ' +
-            SCALED_SIZE / 2 +
+            size / 2 +
             ')'
           }
         >

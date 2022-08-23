@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { getNumber, getUnit, getRandomColor, getBoolean } from '../utilities';
+import {
+  getNumber,
+  getUnit,
+  getRandomColor,
+  getBoolean,
+  createScaleNumber,
+} from '../utilities';
 import Svg, { Mask, Rect, G, Circle, Line } from 'react-native-svg';
 import type { PropsWithoutRef } from 'react';
 import type { AvatarProps } from '../types';
@@ -13,54 +19,69 @@ const RectAsAny = Rect as any;
 const LineAsAny = Line as any;
 const CircleAsAny = Circle as any;
 
-function generateColors(name: string, colors: string[]) {
+const AvatarBauhaus = (props: PropsWithoutRef<AvatarProps>) => {
+  const { name, colors, size } = props;
   const numFromName = getNumber(name);
   const range = colors && colors.length;
+  const scaleNumber = createScaleNumber(SIZE, size);
 
-  const elementsProperties = Array.from({ length: ELEMENTS }, (_, i) => ({
-    color: getRandomColor(numFromName + i, colors, range),
-    translateX: getUnit(numFromName * (i + 1), SIZE / 2 - (i + 17), 1),
-    translateY: getUnit(numFromName * (i + 1), SIZE / 2 - (i + 17), 2),
-    rotate: getUnit(numFromName * (i + 1), 360),
-    isSquare: getBoolean(numFromName, 2),
-  }));
+  const SECOND_RECT_TRANSLATE_X = +scaleNumber(60);
+  const SECOND_RECT_TRANSLATE_Y = +scaleNumber(20);
+  const SECOND_RECT_HEIGHT_MODIFIER = +scaleNumber(8);
 
-  return elementsProperties;
-}
+  const LINE_STROKE_WIDTH = +scaleNumber(5);
 
-const AvatarBauhaus = (props: PropsWithoutRef<AvatarProps>) => {
-  const properties = generateColors(props.name, props.colors);
+  const properties = Array.from({ length: ELEMENTS }, (_, i) => {
+    const translateModifier = +scaleNumber(i + 17);
+    return {
+      color: getRandomColor(numFromName + i, colors, range),
+      translateX: getUnit(
+        numFromName * +scaleNumber(i + 1),
+        size / 2 - translateModifier,
+        1
+      ),
+      translateY: getUnit(
+        numFromName * +scaleNumber(i + 1),
+        size / 2 - translateModifier,
+        2
+      ),
+      rotate: getUnit(numFromName * (i + 1), 360),
+      isSquare: getBoolean(numFromName, 2),
+    };
+  });
 
   return (
     <SvgAsAny
-      viewBox={'0 0 ' + SIZE + ' ' + SIZE}
+      viewBox={'0 0 ' + size + ' ' + size}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      width={props.size}
-      height={props.size}
+      width={size}
+      height={size}
     >
       <MaskAsAny
         id="mask__bauhaus"
         maskUnits="userSpaceOnUse"
         x={0}
         y={0}
-        width={SIZE}
-        height={SIZE}
+        width={size}
+        height={size}
       >
         <RectAsAny
-          width={SIZE}
-          height={SIZE}
-          rx={props.square ? undefined : SIZE * 2}
+          width={size}
+          height={size}
+          rx={props.square ? undefined : size * 2}
           fill="white"
         />
       </MaskAsAny>
       <G mask="url(#mask__bauhaus)">
-        <RectAsAny width={SIZE} height={SIZE} fill={properties[0].color} />
+        <RectAsAny width={size} height={size} fill={properties[0].color} />
         <RectAsAny
-          x={(SIZE - 60) / 2}
-          y={(SIZE - 20) / 2}
-          width={SIZE}
-          height={properties[1].isSquare ? SIZE : SIZE / 8}
+          x={(size - SECOND_RECT_TRANSLATE_X) / 2}
+          y={(size - SECOND_RECT_TRANSLATE_Y) / 2}
+          width={size}
+          height={
+            properties[1].isSquare ? size : size / SECOND_RECT_HEIGHT_MODIFIER
+          }
           fill={properties[1].color}
           transform={
             'translate(' +
@@ -70,17 +91,17 @@ const AvatarBauhaus = (props: PropsWithoutRef<AvatarProps>) => {
             ') rotate(' +
             properties[1].rotate +
             ' ' +
-            SIZE / 2 +
+            size / 2 +
             ' ' +
-            SIZE / 2 +
+            size / 2 +
             ')'
           }
         />
         <CircleAsAny
-          cx={SIZE / 2}
-          cy={SIZE / 2}
+          cx={size / 2}
+          cy={size / 2}
           fill={properties[2].color}
-          r={SIZE / 5}
+          r={size / 5}
           transform={
             'translate(' +
             properties[2].translateX +
@@ -91,10 +112,10 @@ const AvatarBauhaus = (props: PropsWithoutRef<AvatarProps>) => {
         />
         <LineAsAny
           x1={0}
-          y1={SIZE / 2}
-          x2={SIZE}
-          y2={SIZE / 2}
-          strokeWidth={2}
+          y1={size / 2}
+          x2={size}
+          y2={size / 2}
+          strokeWidth={LINE_STROKE_WIDTH}
           stroke={properties[3].color}
           transform={
             'translate(' +
@@ -104,9 +125,9 @@ const AvatarBauhaus = (props: PropsWithoutRef<AvatarProps>) => {
             ') rotate(' +
             properties[3].rotate +
             ' ' +
-            SIZE / 2 +
+            size / 2 +
             ' ' +
-            SIZE / 2 +
+            size / 2 +
             ')'
           }
         />
