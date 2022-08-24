@@ -74,11 +74,70 @@ export function createScaleNumber(
 export function createScaleStringNumbers(
   scaleNumberFn: (numberToScale: number) => string
 ) {
-  return function scaleStringNumbers(stringToScale: string) {
-    const regex = new RegExp('\\d+', 'g');
-    let newStringToScale = stringToScale.replaceAll(regex, (numberString) => {
-      return scaleNumberFn(parseFloat(numberString));
+  return function scaleStringNumbers(
+    stringToScale: string,
+    ignoredNumbers: string[] = []
+  ) {
+    const placeholderMap: Record<string, string> = {};
+
+    let scrubbedString = stringToScale;
+    ignoredNumbers.forEach((ignoredNumber) => {
+      const escapedString = escapeRegExp(ignoredNumber);
+      const regex = new RegExp(escapedString, 'g');
+
+      const placeholder = badRandomString(12);
+      placeholderMap[ignoredNumber] = placeholder;
+
+      scrubbedString = scrubbedString.replaceAll(regex, placeholder);
     });
+
+    console.log({ scrubbedString });
+
+    const regex = new RegExp('\\d+', 'g');
+    let newStringToScale = scrubbedString.replaceAll(regex, (numberString) => {
+      if (ignoredNumbers.includes(numberString)) {
+        return numberString;
+      } else {
+        return scaleNumberFn(parseFloat(numberString));
+      }
+    });
+
+    console.log('AFTER SCALE: ', newStringToScale);
+
+    ignoredNumbers.forEach((ignoredNumber) => {
+      const placeholder = placeholderMap[ignoredNumber];
+
+      const regex = new RegExp(placeholder, 'g');
+      newStringToScale = newStringToScale.replaceAll(
+        regex,
+        escapeReplacement(ignoredNumber)
+      );
+    });
+
+    console.log({ newStringToScale });
+
     return newStringToScale;
   };
+}
+
+// https://stackoverflow.com/a/6969486
+export function escapeRegExp(str: string) {
+  return str.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+// https://stackoverflow.com/a/6969486
+export function escapeReplacement(str: string) {
+  return str.replaceAll(/\$/g, '$$$$');
+}
+
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+export function badRandomString(length: number = 8) {
+  let string = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(alphabet.length * Math.random());
+    const letter = alphabet[randomIndex];
+    string += letter;
+  }
+
+  return string;
 }
