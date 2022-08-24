@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { getNumber, getRandomColor } from '../utilities';
+import {
+  createScaleNumber,
+  createScaleStringNumbers,
+  getNumber,
+  getRandomColor,
+} from '../utilities';
 import Svg, {
   Mask,
   Rect,
@@ -21,61 +26,60 @@ const PathAsAny = Path as any;
 const ELEMENTS = 4;
 const SIZE = 80;
 
-function generateColors(name: string, colors: string[]) {
+const AvatarSunset = (props: PropsWithoutRef<AvatarProps>) => {
+  const { colors, size } = props;
+  const name = props.name.replace(/\s/g, '');
+
+  const scaleNumber = createScaleNumber(SIZE, size);
+  const scaleStringNumbers = createScaleStringNumbers(scaleNumber);
+
   const numFromName = getNumber(name);
   const range = colors && colors.length;
 
-  const elementsProperties = Array.from({ length: ELEMENTS }, (_, i) => ({
+  const properties = Array.from({ length: ELEMENTS }, (_, i) => ({
     color: getRandomColor(numFromName + i, colors, range),
   }));
 
-  return elementsProperties;
-}
-
-const AvatarSunset = (props: PropsWithoutRef<AvatarProps>) => {
-  const properties = generateColors(props.name, props.colors);
-  const name = props.name.replace(/\s/g, '');
-
   return (
     <SvgAsAny
-      viewBox={'0 0 ' + SIZE + ' ' + SIZE}
+      viewBox={'0 0 ' + size + ' ' + size}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      width={props.size}
-      height={props.size}
+      width={size}
+      height={size}
     >
       <MaskAsAny
         id="mask__sunset"
         maskUnits="userSpaceOnUse"
         x={0}
         y={0}
-        width={SIZE}
-        height={SIZE}
+        width={size}
+        height={size}
       >
         <RectAsAny
-          width={SIZE}
-          height={SIZE}
-          rx={props.square ? undefined : SIZE * 2}
+          width={size}
+          height={size}
+          rx={props.square ? undefined : size * 2}
           fill="white"
         />
       </MaskAsAny>
       <G mask="url(#mask__sunset)">
         <PathAsAny
           fill={'url(#gradient_paint0_linear_' + name + ')'}
-          d="M0 0h80v40H0z"
+          d={scaleStringNumbers('M0 0h80v40H0z')}
         />
         <PathAsAny
           fill={'url(#gradient_paint1_linear_' + name + ')'}
-          d="M0 40h80v40H0z"
+          d={scaleStringNumbers('M0 40h80v40H0z')}
         />
       </G>
       <Defs>
         <LinearGradient
           id={'gradient_paint0_linear_' + name}
-          x1={SIZE / 2}
+          x1={size / 2}
           y1={0}
-          x2={SIZE / 2}
-          y2={SIZE / 2}
+          x2={size / 2}
+          y2={size / 2}
           gradientUnits="userSpaceOnUse"
         >
           <StopAsAny stopColor={properties[0].color} />
@@ -83,10 +87,10 @@ const AvatarSunset = (props: PropsWithoutRef<AvatarProps>) => {
         </LinearGradient>
         <LinearGradient
           id={'gradient_paint1_linear_' + name}
-          x1={SIZE / 2}
-          y1={SIZE / 2}
-          x2={SIZE / 2}
-          y2={SIZE}
+          x1={size / 2}
+          y1={size / 2}
+          x2={size / 2}
+          y2={size}
           gradientUnits="userSpaceOnUse"
         >
           <StopAsAny stopColor={properties[2].color} />
