@@ -54,6 +54,7 @@ const AvatarPixel = (props: React.PropsWithoutRef<AvatarProps>) => {
           const y = Math.floor(index / 8);
           return (
             <RectAsAny
+              key={index}
               x={x * PIXEL_SIZE}
               y={y * PIXEL_SIZE}
               width={PIXEL_SIZE}
