@@ -1,6 +1,6 @@
 {
   "name": "@mealection/react-native-boring-avatars",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "React Native implementation of boring avatars",
   "main": "lib/module/index.js",
   "module": "lib/module/index.js",
