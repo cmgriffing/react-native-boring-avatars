@@ -9,7 +9,7 @@ Forked from [https://github.com/luhart/react-native-boring-avatars](https://gith
 In the original library, there is heavy use of magic strings and hardcoded values. This caused heavy pixellation when trying to make avatars larger than their default values.
 
 For an understanding of how this all works please see this blog post:
-[https://mealection.com/blog/forking-react-native-boring-avatars](https://mealection.com/blog/forking-react-native-boring-avatars)
+[https://mealection.com/blog/forking-react-native-boring-avatars](https://whirligiglabs.com/blog/forking-react-native-boring-avatars)
 
 Couldn't we have made a Pull Request? Yes, but the original library seems to have stagnated a bit with no recent changes and serveral hanging Issues. We also wanted to impose our own code style and TypeScipt preferences.
 
