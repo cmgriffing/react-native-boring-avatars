@@ -28,7 +28,7 @@
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet",
+    "pods": "cd example && npx pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
     "copy:lib": "ts-node --project ./tsconfig.json scripts/copy-lib.ts",
     "watch:lib": "nodemon --watch src -e ts,tsx --exec 'yarn copy:lib'"
