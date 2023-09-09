@@ -2,7 +2,7 @@
   "exclude": ["./example", "./lib"],
   "compilerOptions": {
     "declaration": true,
-    "noEmit": false,
+    // "noEmit": false,
     "baseUrl": "./",
     "paths": {
       "react-native-boring-avatars": ["./src/index"]
@@ -26,7 +26,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "outDir": "./lib/module"
+    // "outDir": "./lib/module"
   },
 
   "ts-node": {
