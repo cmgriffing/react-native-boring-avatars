@@ -100,13 +100,11 @@ export function createScaleStringNumbers(
       const placeholder = badRandomString(12);
       placeholderMap[ignoredNumber] = placeholder;
 
-      scrubbedString = scrubbedString.replaceAll(regex, placeholder);
+      scrubbedString = scrubbedString.replace(regex, placeholder);
     });
 
-    console.log({ scrubbedString });
-
     const regex = new RegExp('\\d+', 'g');
-    let newStringToScale = scrubbedString.replaceAll(regex, (numberString) => {
+    let newStringToScale = scrubbedString.replace(regex, (numberString: string) => {
       if (ignoredNumbers.includes(numberString)) {
         return numberString;
       } else {
@@ -114,19 +112,14 @@ export function createScaleStringNumbers(
       }
     });
 
-    console.log('AFTER SCALE: ', newStringToScale);
-
     ignoredNumbers.forEach((ignoredNumber) => {
       const placeholder = placeholderMap[ignoredNumber];
-
       const regex = new RegExp(placeholder, 'g');
-      newStringToScale = newStringToScale.replaceAll(
+      newStringToScale = newStringToScale.replace(
         regex,
         escapeReplacement(ignoredNumber)
       );
     });
-
-    console.log({ newStringToScale });
 
     return newStringToScale;
   };
@@ -134,11 +127,11 @@ export function createScaleStringNumbers(
 
 // https://stackoverflow.com/a/6969486
 export function escapeRegExp(str: string) {
-  return str.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 // https://stackoverflow.com/a/6969486
 export function escapeReplacement(str: string) {
-  return str.replaceAll(/\$/g, '$$$$');
+  return str.replace(/\$/g, '$$$$');
 }
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
