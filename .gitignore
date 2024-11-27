@@ -61,3 +61,5 @@ lib/module/
 lib/typescript/
 
 *.js
+
+.yarn/

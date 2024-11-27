@@ -1,12 +1,11 @@
-export const getNumber = (name: string) => {
-  const charactersArray = name ? Array.from(name) : [];
-  let charactersCodesSum = 0;
-
-  charactersArray.forEach((charactersArrayItem) => {
-    return (charactersCodesSum += charactersArrayItem.charCodeAt(0));
-  });
-
-  return charactersCodesSum;
+export const hashCode = (name: string) => {
+  var hash = 0;
+  for (var i = 0; i < name.length; i++) {
+    var character = name.charCodeAt(i);
+    hash = (hash << 5) - hash + character;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
 };
 
 export const getModulus = (num: number, max: number) => {
@@ -56,7 +55,20 @@ export const getContrast = (hexcolor: string) => {
   var yiq = (r * 299 + g * 587 + b * 114) / 1000;
 
   // Check contrast
-  return yiq >= 128 ? 'black' : 'white';
+  return yiq >= 128 ? '#000000' : '#FFFFFF';
+};
+
+// Can be deleted...
+
+export const getNumber = (name: string) => {
+  const charactersArray = name ? Array.from(name) : [];
+  let charactersCodesSum = 0;
+
+  charactersArray.forEach((charactersArrayItem) => {
+    return (charactersCodesSum += charactersArrayItem.charCodeAt(0));
+  });
+
+  return charactersCodesSum;
 };
 
 export function createScaleNumber(
@@ -88,13 +100,11 @@ export function createScaleStringNumbers(
       const placeholder = badRandomString(12);
       placeholderMap[ignoredNumber] = placeholder;
 
-      scrubbedString = scrubbedString.replaceAll(regex, placeholder);
+      scrubbedString = scrubbedString.replace(regex, placeholder);
     });
 
-    console.log({ scrubbedString });
-
     const regex = new RegExp('\\d+', 'g');
-    let newStringToScale = scrubbedString.replaceAll(regex, (numberString) => {
+    let newStringToScale = scrubbedString.replace(regex, (numberString: string) => {
       if (ignoredNumbers.includes(numberString)) {
         return numberString;
       } else {
@@ -102,19 +112,14 @@ export function createScaleStringNumbers(
       }
     });
 
-    console.log('AFTER SCALE: ', newStringToScale);
-
     ignoredNumbers.forEach((ignoredNumber) => {
       const placeholder = placeholderMap[ignoredNumber];
-
       const regex = new RegExp(placeholder, 'g');
-      newStringToScale = newStringToScale.replaceAll(
+      newStringToScale = newStringToScale.replace(
         regex,
         escapeReplacement(ignoredNumber)
       );
     });
-
-    console.log({ newStringToScale });
 
     return newStringToScale;
   };
@@ -122,11 +127,11 @@ export function createScaleStringNumbers(
 
 // https://stackoverflow.com/a/6969486
 export function escapeRegExp(str: string) {
-  return str.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 // https://stackoverflow.com/a/6969486
 export function escapeReplacement(str: string) {
-  return str.replaceAll(/\$/g, '$$$$');
+  return str.replace(/\$/g, '$$$$');
 }
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

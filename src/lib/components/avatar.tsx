@@ -4,6 +4,7 @@ import AvatarSunset from './avatar-sunset';
 import AvatarBauhaus from './avatar-bauhaus';
 import AvatarPixel from './avatar-pixel';
 import AvatarRing from './avatar-ring';
+import AvatarMarble from './avatar-marble';
 import type { AvatarProps } from '../types';
 
 const variants = ['pixel', 'bauhaus', 'ring', 'beam', 'sunset', 'marble'];
@@ -12,7 +13,7 @@ function getAvatar(avatarType: string, avatarProps: AvatarProps): any {
   const avatars: any = {
     beam: () => <AvatarBeam {...avatarProps} />,
     sunset: () => <AvatarSunset {...avatarProps} />,
-    // marble: () => <AvatarBeam {...avatarProps} />,
+    marble: () => <AvatarMarble {...avatarProps} />,
     pixel: () => <AvatarPixel {...avatarProps} />,
     bauhaus: () => <AvatarBauhaus {...avatarProps} />,
     ring: () => <AvatarRing {...avatarProps} />,
@@ -21,7 +22,7 @@ function getAvatar(avatarType: string, avatarProps: AvatarProps): any {
 }
 
 const Avatar = ({
-  variant = 'beam',
+  variant = 'marble',
   colors = ['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90'],
   name = 'Sacagawea',
   square = false,

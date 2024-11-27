@@ -4,6 +4,11 @@ React Native implementation of [boring avatars](https://boringavatars.com/)
 
 Forked from [https://github.com/luhart/react-native-boring-avatars](https://github.com/luhart/react-native-boring-avatars).
 
+Then forked again to fix the error 
+```sh
+""RNSVGRect" was not found in the UIManager 
+```
+
 ## Why Fork?
 
 In the original library, there is heavy use of magic strings and hardcoded values. This caused heavy pixellation when trying to make avatars larger than their default values.
@@ -33,9 +38,16 @@ import Avatar from 'react-native-boring-avatars';
 />;
 ```
 
-## Caveat
+### Props
 
-The marble variant is not suppported. This is because `react-native-svg` does not support the SVG `filter` attribute which the marble variant depends on. 🙁 Check [here](https://github.com/react-native-svg/react-native-svg/issues/150) for more details on react-native-svg on this issue.
+| Prop    | Type                                                                   |
+| ------- | ---------------------------------------------------------------------- |
+| size    | number or string, `40px` (default)                                     |
+| square  | boolean: `false` (default)                                             |
+| title   | boolean: `false` (default)                                             |
+| name    | string                                                                 |
+| variant | oneOf: `marble` (default), `beam`, `pixel`,`sunset`, `ring`, `bauhaus` |
+| colors  | array of colors                                                        |
 
 ## License
 

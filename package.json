@@ -1,5 +1,5 @@
 {
-  "name": "@mealection/react-native-boring-avatars",
+  "name": "@grafster/react-native-boring-avatars",
   "version": "1.1.2",
   "description": "React Native implementation of boring avatars",
   "main": "lib/module/index.js",
@@ -28,7 +28,7 @@
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet",
+    "pods": "cd example && npx pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
     "copy:lib": "ts-node --project ./tsconfig.json scripts/copy-lib.ts",
     "watch:lib": "nodemon --watch src -e ts,tsx --exec 'yarn copy:lib'"
@@ -56,34 +56,20 @@
     "access": "public"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^11.0.0",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "@release-it/conventional-changelog": "^2.0.0",
     "@types/fs-extra": "^9.0.13",
-    "@types/jest": "^26.0.0",
-    "@types/mocha": "^9.1.1",
-    "@types/react": "^16.9.19",
+    "@types/react": "~18.3.12",
     "@types/react-native": "0.62.13",
-    "commitlint": "^11.0.0",
-    "eslint": "^7.2.0",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-prettier": "^3.1.3",
     "fs-extra": "^10.1.0",
-    "jest": "^26.0.1",
-    "nodemon": "^2.0.19",
-    "pod-install": "^0.1.0",
-    "prettier": "^2.0.5",
-    "react": "16.13.1",
-    "react-native": "0.63.4",
+    "react": "18.3.1",
+    "react-native": "0.76.3",
     "react-native-builder-bob": "^0.18.1",
-    "release-it": "^14.2.2",
     "ts-node": "^10.9.1",
-    "typescript": "^4.1.3"
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-svg": "^13.0.0"
+    "react-native-svg": "^15.9.0"
   },
   "jest": {
     "preset": "react-native",
@@ -148,8 +134,15 @@
     "source": "src",
     "output": "lib",
     "targets": [
-      "module"
+      "module",
+      "typescript"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "react-native-svg": "^15.9.0"
+  },
+  "packageManager": "yarn@4.4.1+sha512.f825273d0689cc9ead3259c14998037662f1dcd06912637b21a450e8da7cfeb4b1965bbee73d16927baa1201054126bc385c6f43ff4aa705c8631d26e12460f1",
+  "workspaces": [
+    "example"
+  ]
 }
