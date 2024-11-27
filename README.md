@@ -38,9 +38,16 @@ import Avatar from 'react-native-boring-avatars';
 />;
 ```
 
-## Caveat
+### Props
 
-The marble variant is not suppported. This is because `react-native-svg` does not support the SVG `filter` attribute which the marble variant depends on. 🙁 Check [here](https://github.com/react-native-svg/react-native-svg/issues/150) for more details on react-native-svg on this issue.
+| Prop    | Type                                                                   |
+| ------- | ---------------------------------------------------------------------- |
+| size    | number or string, `40px` (default)                                     |
+| square  | boolean: `false` (default)                                             |
+| title   | boolean: `false` (default)                                             |
+| name    | string                                                                 |
+| variant | oneOf: `marble` (default), `beam`, `pixel`,`sunset`, `ring`, `bauhaus` |
+| colors  | array of colors                                                        |
 
 ## License
 
